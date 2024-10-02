@@ -12,4 +12,4 @@
 #
 # - Edit this to change how your program runs locally
 # - Edit .codecrafters/run.sh to change how your program runs remotely
-exec node $(dirname "$0")/app/main.js "$@"
+exec node $(dirname "$0")/app/main.js "$@" | tee debug.log

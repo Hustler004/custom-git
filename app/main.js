@@ -35,7 +35,8 @@ function createGitDirectory() {
 
 function readBlob() {
   try {
-    const hash = process.argv[3];
+    console.log(process.argv);
+    const hash = process.argv[4];
     const sub_dir = hash.substring(0, 2);
     const filename = hash.substring(2);
     const content = fs.readFileSync(

@@ -35,17 +35,14 @@ function createGitDirectory() {
 
 function readBlob() {
   try {
-    console.log(process.argv);
     const hash = process.argv[4];
     const sub_dir = hash.substring(0, 2);
     const filename = hash.substring(2);
     const content = fs.readFileSync(
-      path.join(
-        process.cwd(),
-        `.git/objects/${sub_dir + "/" + filename}`,
-        "utf-8"
-      )
+      path.join(process.cwd(), `.git/objects/${sub_dir + "/" + filename}`),
+      "utf-8"
     );
+
     const decompressed = zlib.inflateSync(content);
     console.log(decompressed);
   } catch (err) {

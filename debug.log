@@ -4,28 +4,19 @@ Logs from your program will appear here!
   'E:\\Custom-Git\\codecrafters-git-javascript\\app\\main.js',
   'cat-file',
   '-p',
-  'c41e636f622cc0ab8aa3f39b5a31c8cbfe3f575b'
+  '3e4ccfd521cbb48208d0251c1f678a135e9b9492'
 ]
-[
-  'C:\\Program Files\\nodejs\\node.exe',
-  'E:\\Custom-Git\\codecrafters-git-javascript\\app\\main.js',
-  'cat-file',
-  '-p',
-  'c41e636f622cc0ab8aa3f39b5a31c8cbfe3f575b'
-]
-Error: ENOENT: no such file or directory, open 'E:\Custom-Git\codecrafters-git-javascript\.git\objects\c4\1e636f622cc0ab8aa3f39b5a31c8cbfe3f575b\utf-8'
-    at Object.openSync (node:fs:573:18)
-    at Object.readFileSync (node:fs:452:35)
-    at readBlob (E:\Custom-Git\codecrafters-git-javascript\app\main.js:42:24)
+Error: invalid block type
+    at genericNodeError (node:internal/errors:984:15)
+    at wrappedFn (node:internal/errors:538:14)
+    at Zlib.zlibOnError [as onerror] (node:zlib:191:17)
+    at processChunkSync (node:zlib:459:12)
+    at zlibBufferSync (node:zlib:180:12)
+    at Object.syncBufferWrapper [as inflateSync] (node:zlib:811:14)
+    at readBlob (E:\Custom-Git\codecrafters-git-javascript\app\main.js:46:31)
     at Object.<anonymous> (E:\Custom-Git\codecrafters-git-javascript\app\main.js:16:5)
     at Module._compile (node:internal/modules/cjs/loader:1358:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1416:10)
-    at Module.load (node:internal/modules/cjs/loader:1208:32)
-    at Module._load (node:internal/modules/cjs/loader:1024:12)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:174:12)
-    at node:internal/main/run_main_module:28:49 {
-  errno: -4058,
-  code: 'ENOENT',
-  syscall: 'open',
-  path: 'E:\\Custom-Git\\codecrafters-git-javascript\\.git\\objects\\c4\\1e636f622cc0ab8aa3f39b5a31c8cbfe3f575b\\utf-8'
+    at Module._extensions..js (node:internal/modules/cjs/loader:1416:10) {
+  errno: -3,
+  code: 'Z_DATA_ERROR'
 }

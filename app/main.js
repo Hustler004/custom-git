@@ -50,7 +50,7 @@ function readBlob() {
 
     // Convert the content to a string (assuming utf-8 encoding)
     const decompressedString = actualContent.toString("utf-8");
-    console.log(decompressedString);
+    process.stdout.write(decompressedString);
   } catch (err) {
     console.log(err);
   }

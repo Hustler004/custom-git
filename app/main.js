@@ -4,7 +4,6 @@ const zlib = require("zlib");
 
 // You can use print statements as follows for debugging, they'll be visible when running tests.
 console.log("Logs from your program will appear here!");
-console.log(process.argv);
 // Uncomment this block to pass the first stage
 const command = process.argv[2];
 
@@ -44,7 +43,13 @@ function readBlob() {
     );
 
     const decompressed = zlib.inflateSync(content);
-    const decompressedString = decompressed.toString("utf-8");
+    const nullCharIndex = decompressed.indexOf(0);
+
+    // Extract the actual content after the null character
+    const actualContent = decompressed.slice(nullCharIndex + 1);
+
+    // Convert the content to a string (assuming utf-8 encoding)
+    const decompressedString = actualContent.toString("utf-8");
     console.log(decompressedString);
   } catch (err) {
     console.log(err);

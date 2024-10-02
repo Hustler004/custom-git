@@ -34,12 +34,16 @@ function createGitDirectory() {
 }
 
 function readBlob() {
-  const hash = process.argv[4];
-  const sub_dir = hash.substring(0, 2);
-  const filename = hash.substring(2);
-  const content = fs.readFileSync(
-    path.join(process.cwd(), `.git/objects/${sub_dir + "/" + filename}`)
-  );
-  const decompressed = zlib.inflateSync(content);
-  console.log(decompressed);
+  try {
+    const hash = process.argv[3];
+    const sub_dir = hash.substring(0, 2);
+    const filename = hash.substring(2);
+    const content = fs.readFileSync(
+      path.join(process.cwd(), `.git/objects/${sub_dir + "/" + filename}`)
+    );
+    const decompressed = zlib.inflateSync(content);
+    console.log(decompressed);
+  } catch (err) {
+    console.log(err);
+  }
 }

@@ -6,7 +6,14 @@ Logs from your program will appear here!
   '-p',
   'c41e636f622cc0ab8aa3f39b5a31c8cbfe3f575b'
 ]
-Error: ENOENT: no such file or directory, open 'E:\Custom-Git\codecrafters-git-javascript\.git\objects\c4\1e636f622cc0ab8aa3f39b5a31c8cbfe3f575b'
+[
+  'C:\\Program Files\\nodejs\\node.exe',
+  'E:\\Custom-Git\\codecrafters-git-javascript\\app\\main.js',
+  'cat-file',
+  '-p',
+  'c41e636f622cc0ab8aa3f39b5a31c8cbfe3f575b'
+]
+Error: ENOENT: no such file or directory, open 'E:\Custom-Git\codecrafters-git-javascript\.git\objects\c4\1e636f622cc0ab8aa3f39b5a31c8cbfe3f575b\utf-8'
     at Object.openSync (node:fs:573:18)
     at Object.readFileSync (node:fs:452:35)
     at readBlob (E:\Custom-Git\codecrafters-git-javascript\app\main.js:42:24)
@@ -20,5 +27,5 @@ Error: ENOENT: no such file or directory, open 'E:\Custom-Git\codecrafters-git-j
   errno: -4058,
   code: 'ENOENT',
   syscall: 'open',
-  path: 'E:\\Custom-Git\\codecrafters-git-javascript\\.git\\objects\\c4\\1e636f622cc0ab8aa3f39b5a31c8cbfe3f575b'
+  path: 'E:\\Custom-Git\\codecrafters-git-javascript\\.git\\objects\\c4\\1e636f622cc0ab8aa3f39b5a31c8cbfe3f575b\\utf-8'
 }

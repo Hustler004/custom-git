@@ -39,12 +39,13 @@ function readBlob() {
     const sub_dir = hash.substring(0, 2);
     const filename = hash.substring(2);
     const content = fs.readFileSync(
-      path.join(process.cwd(), `.git/objects/${sub_dir + "/" + filename}`),
-      "utf-8"
+      path.join(process.cwd(), `.git/objects/${sub_dir + "/" + filename}`)
+      // "utf-8"
     );
 
     const decompressed = zlib.inflateSync(content);
-    console.log(decompressed);
+    const decompressedString = decompressed.toString("utf-8");
+    console.log(decompressedString);
   } catch (err) {
     console.log(err);
   }

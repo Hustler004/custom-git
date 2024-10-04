@@ -129,6 +129,12 @@ exports.lsTree = (sha) => {
   const entries = parseTree(treeData); // Parse the tree entries
 
   // Full output (mode, type, SHA, name)
+  if ("--name-only" in process.argv) {
+    entries.forEach((entry) => {
+      const type = entry.mode === "040000" ? "tree" : "blob";
+      console.log(`${entry.name}`);
+    });
+  }
   entries.forEach((entry) => {
     const type = entry.mode === "040000" ? "tree" : "blob";
     console.log(`${entry.mode} ${type} ${entry.sha} ${entry.name}`);

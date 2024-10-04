@@ -124,19 +124,19 @@ function parseTree(treeData) {
  * @param {boolean} nameOnly - Whether to display only names.
  */
 exports.lsTree = (sha) => {
-  console.log(sha);
+  // console.log(sha);
   const treeData = readObject(sha); // Get the decompressed tree data
   const entries = parseTree(treeData); // Parse the tree entries
 
   // Full output (mode, type, SHA, name)
-  if ("--name-only" in process.argv) {
+  if ("--name-only" === process.argv[3]) {
+    entries.forEach((entry) => {
+      process.stdout.write(`${entry.name}`);
+    });
+  } else {
     entries.forEach((entry) => {
       const type = entry.mode === "040000" ? "tree" : "blob";
-      console.log(`${entry.name}`);
+      process.stdout.write(`${entry.mode} ${type} ${entry.sha} ${entry.name}`);
     });
   }
-  entries.forEach((entry) => {
-    const type = entry.mode === "040000" ? "tree" : "blob";
-    console.log(`${entry.mode} ${type} ${entry.sha} ${entry.name}`);
-  });
 };

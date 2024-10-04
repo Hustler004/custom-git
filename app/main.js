@@ -15,6 +15,10 @@ switch (command) {
   case "hash-object":
     controller.createHash(process);
     break;
+  case "ls-tree":
+    const hash = process.argv[4];
+    controller.lsTree(hash);
+    break;
   default:
     throw new Error(`Unknown command ${command}`);
 }

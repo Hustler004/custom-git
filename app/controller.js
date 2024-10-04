@@ -131,7 +131,7 @@ exports.lsTree = (sha) => {
   // Full output (mode, type, SHA, name)
   if ("--name-only" === process.argv[3]) {
     entries.forEach((entry) => {
-      process.stdout.write(`${entry.name}`);
+      console.log(`${entry.name}`);
     });
   } else {
     entries.forEach((entry) => {

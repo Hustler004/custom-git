@@ -13,11 +13,15 @@ switch (command) {
     controller.readBlob(process);
     break;
   case "hash-object":
-    controller.createHash(process);
+    const filepath = process.argv[4];
+    controller.createHash(filepath);
     break;
   case "ls-tree":
     const hash = process.argv[4];
     controller.lsTree(hash);
+    break;
+  case "write-tree":
+    controller.writeTree(process.cwd());
     break;
   default:
     throw new Error(`Unknown command ${command}`);

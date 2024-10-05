@@ -51,9 +51,8 @@ exports.readBlob = (process) => {
   }
 };
 
-exports.createHash = (process) => {
+exports.createHash = (filepath) => {
   try {
-    const filepath = process.argv[4];
     const content = fs.readFileSync(
       path.join(process.cwd(), filepath),
       "utf-8"
@@ -80,6 +79,7 @@ exports.createHash = (process) => {
 
     fs.writeFileSync(objectFilePath, compressedContent);
     process.stdout.write(hash);
+    return hash;
   } catch (err) {
     console.log(err);
   }
@@ -112,7 +112,7 @@ function parseTree(treeData) {
     const sha = rest.slice(nameEnd + 1, nameEnd + 21).toString("hex"); // Convert to hex for readability
 
     entries.push({ mode, name, sha });
-
+    if (offset + 21 > rest.length) break;
     offset = nameEnd + 21; // Move to the next entry
   }
   return entries.sort((a, b) => a.name.localeCompare(b.name));
@@ -124,10 +124,9 @@ function parseTree(treeData) {
  * @param {boolean} nameOnly - Whether to display only names.
  */
 exports.lsTree = (sha) => {
-  // console.log(sha);
+  // console.log("sha");
   const treeData = readObject(sha); // Get the decompressed tree data
   const entries = parseTree(treeData); // Parse the tree entries
-
   // Full output (mode, type, SHA, name)
   if ("--name-only" === process.argv[3]) {
     entries.forEach((entry) => {
@@ -139,4 +138,74 @@ exports.lsTree = (sha) => {
       process.stdout.write(`${entry.mode} ${type} ${entry.sha} ${entry.name}`);
     });
   }
+};
+
+function hashFile(filepath) {
+  try {
+    const content = fs.readFileSync(filepath, "utf-8");
+    const contentSize = content.length;
+    const contentToBeHashed = `blob ${contentSize}\0${content}`;
+
+    const hash = crypto
+      .createHash("sha1")
+      .update(contentToBeHashed)
+      .digest("hex");
+
+    const objectDir = path.join(
+      process.cwd(),
+      `.git/objects/${hash.substring(0, 2)}`
+    );
+    const objectFilePath = path.join(objectDir, `${hash.substring(2)}`);
+
+    if (!fs.existsSync(objectDir)) {
+      fs.mkdirSync(objectDir, { recursive: true });
+    }
+
+    const compressedContent = zlib.deflateSync(contentToBeHashed);
+
+    fs.writeFileSync(objectFilePath, compressedContent);
+    return hash;
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+function writeTreeHelper(directory) {
+  const entries = fs.readdirSync(directory, { withFileTypes: true });
+  let content = "";
+  entries.forEach((entry) => {
+    const fullpath = path.join(directory, entry.name);
+    if (entry.name === ".git") return;
+    if (entry.isDirectory()) {
+      const hash = writeTreeHelper(fullpath);
+      const treeSign = `040000 ${entry.name}\0${hash}`;
+      content += treeSign;
+    } else if (entry.isFile()) {
+      const hash = hashFile(fullpath);
+      const fileSign = `100644 ${entry.name}\0${hash}`;
+      content += fileSign;
+    }
+  });
+  content = `tree ${content.length}\0${content}`;
+  const hash = crypto.createHash("sha1").update(content).digest("hex");
+  const objectDir = path.join(
+    process.cwd(),
+    `.git/objects/${hash.substring(0, 2)}`
+  );
+  const objectFilePath = path.join(objectDir, `${hash.substring(2)}`);
+
+  if (!fs.existsSync(objectDir)) {
+    fs.mkdirSync(objectDir, { recursive: true });
+  }
+
+  const compressedContent = zlib.deflateSync(content);
+
+  fs.writeFileSync(objectFilePath, compressedContent);
+  // console.log(hash);
+  return hash;
+}
+
+exports.writeTree = (directory) => {
+  const hash = writeTreeHelper(directory);
+  process.stdout.write(hash);
 };

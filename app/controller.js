@@ -208,4 +208,13 @@ function writeTreeHelper(directory) {
 exports.writeTree = (directory) => {
   const hash = writeTreeHelper(directory);
   process.stdout.write(hash);
+  // const value = fs.readFileSync(
+  //   path.join(
+  //     process.cwd(),
+  //     `.git/objects/${hash.substring(0, 2)}/${hash.substring(2)}`
+  //   )
+  // );
+  // const content = zlib.inflateSync(value);
+  // console.log(content.toString("utf-8"));
+  // this.lsTree(hash);
 };

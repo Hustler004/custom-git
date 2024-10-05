@@ -222,7 +222,7 @@ exports.commitTree = () => {
   const treeHash = process.argv[3];
   const parentHash = process.argv[5];
   const commitMessage = process.argv[7];
-  const content = `tree ${treeHash}\nparent ${parentHash}\nauthor Hustler004 agam@gmail.com 1728148677 +0530\ncommitter Hustler004 agam@gmail.com 1728148677 +0530\n\n${commitMessage}`;
+  const content = `tree ${treeHash}\nparent ${parentHash}\nauthor Hustler004 agam@gmail.com 1728148677 +0530\ncommitter Hustler004 agam@gmail.com 1728148677 +0530\n\n${commitMessage}\n`;
   const newCommitFile = `commit ${content.length}\0${content}`;
   const commitHash = crypto
     .createHash("sha1")

@@ -239,5 +239,5 @@ exports.commitTree = () => {
 
   const compressedContent = zlib.deflateSync(newCommitFile);
   fs.writeFileSync(objectFilePath, compressedContent);
-  process.stdout.write(commitHash);
+  console.log(commitHash);
 };

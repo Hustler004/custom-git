@@ -23,6 +23,9 @@ switch (command) {
   case "write-tree":
     controller.writeTree(process.cwd());
     break;
+  case "commit-tree":
+    controller.commitTree(process);
+    break;
   default:
     throw new Error(`Unknown command ${command}`);
 }

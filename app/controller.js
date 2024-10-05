@@ -217,3 +217,27 @@ exports.writeTree = (directory) => {
   const treeHash = writeTreeHelper(directory);
   console.log(treeHash.toString("hex")); // Output the hash in hexadecimal form
 };
+
+exports.commitTree = () => {
+  const treeHash = process.argv[3];
+  const parentHash = process.argv[5];
+  const commitMessage = process.argv[7];
+  const content = `tree ${treeHash}\nparent ${parentHash}\nauthor Hustler004 agam@gmail.com 1728148677 +0530\ncommitter Hustler004 agam@gmail.com 1728148677 +0530\n\n${commitMessage}`;
+  const newCommitFile = `commit ${content.length}\0${content}`;
+  const commitHash = crypto
+    .createHash("sha1")
+    .update(newCommitFile)
+    .digest("hex");
+  const objectDir = path.join(
+    process.cwd(),
+    `.git/objects/${commitHash.substring(0, 2)}`
+  );
+  const objectFilePath = path.join(objectDir, commitHash.substring(2));
+  if (!fs.existsSync(objectDir)) {
+    fs.mkdirSync(objectDir, { recursive: true });
+  }
+
+  const compressedContent = zlib.deflateSync(newCommitFile);
+  fs.writeFileSync(objectFilePath, compressedContent);
+  process.stdout.write(commitHash);
+};

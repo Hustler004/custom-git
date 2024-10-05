@@ -173,7 +173,7 @@ function writeTreeHelper(directory) {
 
     let mode, hash;
     if (entry.isDirectory()) {
-      mode = "40000"; // Directory mode
+      mode = "40000"; // Directory mode //had to remove leading zeros coz git ignores leading zeros
       hash = writeTreeHelper(fullpath); // Recurse into subdirectory
     } else if (entry.isFile()) {
       mode = "100644"; // Regular file mode
